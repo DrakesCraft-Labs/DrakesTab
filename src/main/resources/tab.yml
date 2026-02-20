@@ -1,0 +1,47 @@
+# Tablist settings for DrakesTab.
+# All strings support MiniMessage and PlaceholderAPI.
+
+tab:
+  # Time in ticks between each header/footer frame.
+  # Recommended: 10-40.
+  # [DANGER] Values below 2 can create extra load in large networks.
+  update-interval-ticks: 20
+
+  # Animated header frames.
+  header-frames:
+    - "<gradient:gold:yellow><b>DrakesCraft</b></gradient>\n<gray>Survival * Tech * Crates</gray>"
+    - "<gradient:aqua:blue><b>DrakesCraft</b></gradient>\n<gray>Survival * Tech * Crates</gray>"
+
+  # Animated footer frames.
+  footer-frames:
+    - "<gray>Online:</gray> <green>%server_online%</green> <dark_gray>|</dark_gray> <yellow>drakescraft.net</yellow>"
+    - "<gray>Discord:</gray> <aqua>discord.gg/drakes</aqua>"
+
+sidebar:
+  # Enable/disable the scoreboard sidebar.
+  enabled: true
+
+  # Update interval for sidebar lines (ticks).
+  # You can set this higher than tab.update-interval-ticks to reduce updates.
+  update-interval-ticks: 20
+
+  # Sidebar title (MiniMessage).
+  title: "<gradient:gold:yellow><b>DrakesCore</b></gradient>"
+
+  # Custom formats.
+  # %amount% will be replaced with the Vault-formatted balance.
+  money-format: "<green>$%amount%</green>"
+
+  # Format string for TPS (Java String.format).
+  tps-format: "%.2f"
+
+  # Sidebar lines (top to bottom).
+  # Built-in placeholders: %money%, %ping%, %tps%
+  # DrakesRanks placeholders: %drakesranks_rank%, %drakesranks_prefix%, %drakesranks_suffix%, %drakesranks_color%
+  # PlaceholderAPI tokens also work here.
+  lines:
+    - "<gray>Rank:</gray> <yellow>%drakesranks_rank%</yellow>"
+    - "<gray>Money:</gray> <green>%money%</green>"
+    - "<gray>Ping:</gray> <aqua>%ping%</aqua>"
+    - "<gray>TPS:</gray> <green>%tps%</green>"
+    - "<dark_gray>drakescraft.net</dark_gray>"

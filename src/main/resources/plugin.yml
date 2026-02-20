@@ -1,0 +1,7 @@
+name: DrakesTab
+version: 1.0
+main: me.jackstar.drakestab.DrakesTabPlugin
+api-version: '1.20'
+authors: [JackStar]
+description: Tablist and scoreboard for DrakesCraft
+softdepend: [PlaceholderAPI, Vault, DrakesRanks]
