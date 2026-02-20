@@ -1,29 +1,32 @@
 # DrakesTab
 
-## Qué es
-Tablist animado (header/footer) y scoreboard sidebar anti-flicker.
+Plugin de tablist + sidebar, extraido del modulo `drakestab` del antiguo `DrakesCore`.
 
-## Arquitectura
-- `TabManager` gestiona frames, sidebar y placeholders internos.
-- `VaultEconomyProvider` integra economía si existe Vault.
+## Objetivo
+Mostrar informacion dinamica de red en Tab y Scoreboard con bajo flicker.
 
-## Hecho
-- Header/footer animados con MiniMessage.
-- Sidebar con anti-flicker (teams buffer).
-- Placeholders internos `%money%`, `%ping%`, `%tps%`.
-- Soporte de PlaceholderAPI.
+## Que hace hoy
+- Header/Footer animado por frames en `tab.yml`.
+- Sidebar con estrategia anti-flicker usando scoreboard teams.
+- Variables internas: `%money%`, `%ping%`, `%tps%`.
+- Soporta PlaceholderAPI en header, footer y lineas.
+- Integra Vault (si existe) para balance economico.
 
-## Falta
-- Auto-wrap de líneas largas (opcional).
-- Perfil por mundo/permisos (opcional).
+## Integracion con otros plugins
+- `DrakesRanks` via placeholders PAPI (ej: `%drakesranks_rank%`).
+- `Vault` + provider de economia para `%money%`.
 
-## Configuración
-- `tab.yml` con comentarios in-line.
-- Rank se obtiene por PlaceholderAPI (ej: `%drakesranks_rank%`).
+## Configuracion
+- `src/main/resources/tab.yml`
+- Control de intervalos de update para tab y sidebar.
 
 ## Dependencias
 - Paper 1.20.6
 - Java 21
 - PlaceholderAPI (opcional)
-- Vault + economía (opcional para Money)
-- DrakesRanks (opcional, para placeholders de rango)
+- Vault + provider economia (opcional)
+
+## Pendiente real
+- Perfilado por mundo o grupo de permisos.
+- Wrap/truncado inteligente para lineas largas.
+- Modo packet-level para redes muy grandes.
