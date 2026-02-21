@@ -10,6 +10,7 @@ commands:
     description: Manage DrakesTab runtime
     usage: /drakestab <reload|status>
     permission: drakestab.admin
+    aliases: [dtab, drtab]
 permissions:
   drakestab.admin:
     description: Allows administration of DrakesTab
