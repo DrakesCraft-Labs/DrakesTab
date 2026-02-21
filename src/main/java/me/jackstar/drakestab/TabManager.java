@@ -5,6 +5,7 @@ import me.jackstar.drakescraft.utils.PlaceholderUtils;
 import me.jackstar.drakestab.economy.VaultEconomyProvider;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -49,6 +50,7 @@ public class TabManager implements Listener {
     private int frameIndex;
     private int intervalTicks = 20;
     private int sidebarIntervalTicks = 20;
+    private int maxVisibleSidebarChars = 48;
     private int headerTick;
     private int sidebarTick;
     private final SidebarRenderer sidebarRenderer = new SidebarRenderer();
@@ -70,6 +72,7 @@ public class TabManager implements Listener {
         sidebarTitle = config.getString("sidebar.title", sidebarTitle);
         sidebarLines = config.getStringList("sidebar.lines");
         sidebarIntervalTicks = Math.max(1, config.getInt("sidebar.update-interval-ticks", intervalTicks));
+        maxVisibleSidebarChars = Math.max(0, config.getInt("sidebar.max-visible-characters", 48));
         moneyFormat = config.getString("sidebar.money-format", moneyFormat);
         tpsFormat = config.getString("sidebar.tps-format", tpsFormat);
 
@@ -116,8 +119,10 @@ public class TabManager implements Listener {
         String footerFrame = footerFrames.isEmpty() ? "<gray>play.drakescraft.net</gray>" : footerFrames.get(frameIndex % footerFrames.size());
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            String parsedHeader = PlaceholderUtils.applyPlaceholders(player, headerFrame);
-            String parsedFooter = PlaceholderUtils.applyPlaceholders(player, footerFrame);
+            String parsedHeader = applyInternalPlaceholders(player, headerFrame);
+            parsedHeader = PlaceholderUtils.applyPlaceholders(player, parsedHeader);
+            String parsedFooter = applyInternalPlaceholders(player, footerFrame);
+            parsedFooter = PlaceholderUtils.applyPlaceholders(player, parsedFooter);
             Component header = MessageUtils.parse(parsedHeader);
             Component footer = MessageUtils.parse(parsedFooter);
             player.sendPlayerListHeaderAndFooter(header, footer);
@@ -139,7 +144,18 @@ public class TabManager implements Listener {
     private Component parseSidebarLine(Player player, String raw) {
         String line = applyInternalPlaceholders(player, raw);
         line = PlaceholderUtils.applyPlaceholders(player, line);
-        return MessageUtils.parse(line);
+        Component parsed = MessageUtils.parse(line);
+        if (maxVisibleSidebarChars <= 0) {
+            return parsed;
+        }
+
+        String plain = PlainTextComponentSerializer.plainText().serialize(parsed);
+        if (plain.length() <= maxVisibleSidebarChars) {
+            return parsed;
+        }
+
+        int cut = Math.max(1, maxVisibleSidebarChars - 1);
+        return Component.text(plain.substring(0, cut) + "...");
     }
 
     private String applyInternalPlaceholders(Player player, String raw) {
@@ -158,6 +174,8 @@ public class TabManager implements Listener {
         }
 
         return raw
+                .replace("%player_name%", player.getName())
+                .replace("%player%", player.getName())
                 .replace("%money%", moneyText)
                 .replace("%ping%", String.valueOf(player.getPing()))
                 .replace("%tps%", tpsText);
@@ -178,11 +196,11 @@ public class TabManager implements Listener {
     }
 
     private void saveDefaultConfigFile() {
-        if (plugin.getResource("tab.yml") != null) {
+        File file = new File(plugin.getDataFolder(), "tab.yml");
+        if (!file.exists() && plugin.getResource("tab.yml") != null) {
             plugin.saveResource("tab.yml", false);
             return;
         }
-        File file = new File(plugin.getDataFolder(), "tab.yml");
         if (file.exists()) {
             return;
         }

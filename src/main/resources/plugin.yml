@@ -5,3 +5,12 @@ api-version: '1.20'
 authors: [JackStar]
 description: Tablist and scoreboard for DrakesCraft
 softdepend: [PlaceholderAPI, Vault, DrakesRanks]
+commands:
+  drakestab:
+    description: Manage DrakesTab runtime
+    usage: /drakestab <reload|status>
+    permission: drakestab.admin
+permissions:
+  drakestab.admin:
+    description: Allows administration of DrakesTab
+    default: op

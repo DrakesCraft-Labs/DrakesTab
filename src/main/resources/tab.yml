@@ -25,6 +25,11 @@ sidebar:
   # You can set this higher than tab.update-interval-ticks to reduce updates.
   update-interval-ticks: 20
 
+  # Hard limit for visible chars in one sidebar line after placeholder render.
+  # Set 0 to disable truncation.
+  # [DANGER] Very high values can create client-side visual glitches.
+  max-visible-characters: 48
+
   # Sidebar title (MiniMessage).
   title: "<gradient:gold:yellow><b>DrakesCore</b></gradient>"
 
