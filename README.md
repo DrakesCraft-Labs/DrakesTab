@@ -29,6 +29,6 @@ Mostrar informacion dinamica de red en Tab y Scoreboard con bajo flicker.
 - Vault + provider economia (opcional)
 
 ## Pendiente real
-- Perfilado por mundo o grupo de permisos.
+- Perfilado por mundo o grupo de permissions.
 - Wrap/truncado inteligente para lineas largas.
 - Modo packet-level para redes muy grandes.
