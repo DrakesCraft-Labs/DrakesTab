@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/DrakesCraft-Labs/DrakesTab/master/banner.svg" width="100%" alt="DRAKES TAB animated banner" />
+</p>
+
 # DrakesTab
 
 Plugin de tablist + sidebar, extraido del modulo `drakestab` del antiguo `DrakesCore`.
@@ -32,3 +36,4 @@ Mostrar informacion dinamica de red en Tab y Scoreboard con bajo flicker.
 - Perfilado por mundo o grupo de permisos.
 - Wrap/truncado inteligente para lineas largas.
 - Modo packet-level para redes muy grandes.
+
